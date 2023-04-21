@@ -74,7 +74,7 @@ def main_page():
     formatted_date = max_date.strftime("%Y年%m月%d日") if max_date is not None else ""
 
     st.title(f'{formatted_today}')
-    st.header('EJSS予測　対　当月実績状況 ')
+    st.header('EJSS進捗管理 ')
 
 
 
