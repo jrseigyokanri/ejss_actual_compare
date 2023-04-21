@@ -13,7 +13,7 @@ formatted_today = today.strftime('%Y-%m-%d')
 
 # Streamlitのページ設定
 st.set_page_config(
-    page_title="EJSS予測比較ダッシュボード",
+    page_title="EJSS進捗管理",
     layout="wide",
 )
 
