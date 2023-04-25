@@ -79,7 +79,7 @@ def main_page():
     formatted_date = max_date.strftime("%Y年%m月%d日") if max_date is not None else ""
 
     st.write('<a name="title"></a>', unsafe_allow_html=True)
-    st.title(f'{formatted_today}'　15:00時点')
+    st.title(f'{formatted_today}　15:00時点')
     st.header('EJSS進捗管理')
 
     reset_scroll_position("title")
