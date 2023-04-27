@@ -79,7 +79,7 @@ def main_page():
     formatted_date = max_date.strftime("%Y年%m月%d日") if max_date is not None else ""
 
     st.write('<a name="title"></a>', unsafe_allow_html=True)
-    st.title(f'{formatted_today}　15:00時点')
+    st.title(f'{formatted_today}　15:00')
     st.header('EJSS進捗管理')
 
     reset_scroll_position("title")
@@ -517,14 +517,31 @@ def main_page():
             EJSS_sales_column: 'sum',
             '売上実績': 'sum',
             EJSS_gross_profit_column: 'sum',
-            '粗利実績': 'sum',
-            'EJSS粗利率': 'mean',
-            '実績粗利率': 'mean'
+
+            '粗利実績': 'sum'
         })
+
+        # 実績粗利率とEJSS粗利率を計算
+        summary_data['EJSS粗利率'] = np.where(summary_data[EJSS_sales_column] != 0, (summary_data[EJSS_gross_profit_column] / summary_data[EJSS_sales_column]) * 100, 0)
+        summary_data['実績粗利率'] = np.where(summary_data['売上実績'] != 0, (summary_data['粗利実績'] / summary_data['売上実績']) * 100, 0)
+        
 
         # 達成度を計算
         summary_data['売上達成度'] = (summary_data['売上実績'] / summary_data[EJSS_sales_column]) * 100
         summary_data['粗利達成度'] = (summary_data['粗利実績'] / summary_data[EJSS_gross_profit_column]) * 100
+
+        # 売上差額と粗利差額を追加
+        summary_data['売上差額'] = summary_data['売上実績'] - summary_data[EJSS_sales_column]
+        summary_data['粗利差額'] = summary_data['粗利実績'] - summary_data[EJSS_gross_profit_column]
+
+
+        # 列の順番を変更
+        summary_data = summary_data[[
+            'コード', '営業担当名',
+            EJSS_sales_column, '売上実績', '売上差額',
+            '売上達成度', EJSS_gross_profit_column, '粗利実績', '粗利差額',
+            '粗利達成度', 'EJSS粗利率', '実績粗利率'
+        ]]
 
         # スタイリングを適用して営業担当別データフレームを表示
         st.header("営業担当別売上状況")
