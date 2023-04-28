@@ -188,38 +188,50 @@ def main_page():
         grouped_forecast_customer['粗利率'] = (grouped_forecast_customer[f'EJSS粗利{zenkaku_num(selected_month)}'] / grouped_forecast_customer[f'EJSS売上{zenkaku_num(selected_month)}']) * 100
 
         # 4カラム表示
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3, col4, col5 = st.columns(5)
 
         # 選択された月の売上実績
         actual_sales = filtered_actual['売上本体金額'].sum()
-        col2.metric(f"📝{selected_month}月の売上実績", f"{actual_sales:,.0f}円")
+        col2.metric(f"💰{selected_month}月の売上実績", f"{actual_sales:,.0f}円")
 
         # 選択された月の売上予測
         sales_forecast = filtered_forecast[f'EJSS売上{zenkaku_num(selected_month)}'].sum()
-        col1.metric(f"💰{selected_month}月の売上予測", f"{sales_forecast:,.0f}円")
+        col1.metric(f"📝{selected_month}月の売上予測", f"{sales_forecast:,.0f}円")
 
         # 選択された月の粗利実績
         actual_gross_profit = filtered_actual['粗利'].sum()
-        col4.metric(f"📝{selected_month}月の粗利実績", f"{actual_gross_profit:,.0f}円")
+        col4.metric(f"💰{selected_month}月の粗利実績", f"{actual_gross_profit:,.0f}円")
 
         # 選択された月の粗利予測
         gross_profit_forecast = filtered_forecast[f'EJSS粗利{zenkaku_num(selected_month)}'].sum()
-        col3.metric(f"💰{selected_month}月の粗利予測", f"{gross_profit_forecast:,.0f}円")
-
-        # 4カラム表示
-        col1, col2, col3, col4 = st.columns(4)
-
-        sales_difference = actual_sales - sales_forecast
-        sales_achievement = (actual_sales / sales_forecast) * 100
+        col3.metric(f"📝{selected_month}月の粗利予測", f"{gross_profit_forecast:,.0f}円")
 
         gross_profit_difference = actual_gross_profit - gross_profit_forecast
         gross_profit_achievement = (actual_gross_profit / gross_profit_forecast) * 100
 
-        col1.metric("📝売上実績と予測の差額", f"{sales_difference:,.0f}円")
-        col2.metric("💰売上達成度", f"{sales_achievement:.2f}%")
-        col3.metric("📝粗利実績と予測の差額", f"{gross_profit_difference:,.0f}円")
-        col4.metric("💰粗利達成度", f"{gross_profit_achievement:.2f}%")
+         # 実績粗利率の計算
+        actual_gross_profit_rate = (actual_gross_profit / actual_sales) * 100
 
+         # EJSS粗利率の計算
+        EJSS_gross_profit_rate = (gross_profit_forecast / sales_forecast) * 100
+
+
+        col5.metric("📘EJSS粗利率", f"{EJSS_gross_profit_rate:.2f}%")
+
+
+        # 4カラム表示
+        col1, col2, col3, col4, col5 = st.columns(5)
+
+        sales_difference = actual_sales - sales_forecast
+        sales_achievement = (actual_sales / sales_forecast) * 100
+           
+        col1.metric("📊売上実績と予測の差額", f"{sales_difference:,.0f}円")
+        col2.metric("🚩売上達成度", f"{sales_achievement:.2f}%")
+        col3.metric("📊粗利実績と予測の差額", f"{gross_profit_difference:,.0f}円")
+        col4.metric("🚩粗利達成度", f"{gross_profit_achievement:.2f}%")
+        col5.metric("📗実績粗利率", f"{actual_gross_profit_rate:.2f}%")
+
+        
 
         with st.expander("グラフ表示"):
 
@@ -542,6 +554,7 @@ def main_page():
             '売上達成度', EJSS_gross_profit_column, '粗利実績', '粗利差額',
             '粗利達成度', 'EJSS粗利率', '実績粗利率'
         ]]
+
 
         # スタイリングを適用して営業担当別データフレームを表示
         st.header("営業担当別売上状況")
