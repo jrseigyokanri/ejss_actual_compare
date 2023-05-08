@@ -562,13 +562,16 @@ def main_page():
 
                 # summary_data のダウンロードボタン
         def to_excel_summary(df):
-            output = io.BytesIO()
-            writer = pd.ExcelWriter(output, engine='xlsxwriter')
-            df.to_excel(writer, sheet_name='Sheet1', index=False)
-            writer.save()
-            output.seek(0)
-            return output
-
+            try:
+                output = io.BytesIO()
+                writer = pd.ExcelWriter(output, engine='xlsxwriter')
+                df.to_excel(writer, sheet_name='Sheet1', index=False)
+                writer.save()
+                output.seek(0)
+                return output
+            except Exception as e:
+                st.error(f"Error occurred while generating Excel file: {str(e)}")
+                return None
         st.download_button(
             label="担当別の表をダウンロード",
             data=to_excel_summary(summary_data),
