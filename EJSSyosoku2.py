@@ -583,14 +583,17 @@ def main_page():
         st.dataframe(style_dataframe(filtered_data))
 
         # filtered_data のダウンロードボタン
-        def to_excel_filtered(df):
-            output = io.BytesIO()
-            writer = pd.ExcelWriter(output, engine='xlsxwriter')
-            df.to_excel(writer, sheet_name='Sheet1', index=False)
-            writer.save()
-            output.seek(0)
-            return output
-
+        def to_excel_summary(df):
+            try:
+                output = io.BytesIO()
+                writer = pd.ExcelWriter(output, engine='xlsxwriter')
+                df.to_excel(writer, sheet_name='Sheet1', index=False)
+                writer.save()
+                output.seek(0)
+                return output
+            except Exception as e:
+                st.error(f"Error occurred while generating Excel file: {str(e)}")
+                return None
         st.download_button(
             label="売上先別の表をダウンロード",
             data=to_excel_filtered(filtered_data),
