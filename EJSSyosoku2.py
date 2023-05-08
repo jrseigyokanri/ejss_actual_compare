@@ -585,7 +585,7 @@ def main_page():
         st.dataframe(style_dataframe(filtered_data))
 
         # filtered_data のダウンロードボタン
-        def to_excel_summary(df):
+        def to_excel_customer_summary(df):
             try:
                 output = io.BytesIO()
                 writer = pd.ExcelWriter(output, engine='xlsxwriter')
