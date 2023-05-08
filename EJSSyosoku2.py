@@ -590,19 +590,20 @@ def main_page():
                 output = io.BytesIO()
                 writer = pd.ExcelWriter(output, engine='xlsxwriter')
                 df.to_excel(writer, sheet_name='Sheet1', index=False)
-                writer.close()  # 'save()' を 'close()' に変更
+                writer.close()
                 output.seek(0)
                 return output
             except Exception as e:
                 st.error(f"Error occurred while generating Excel file: {str(e)}")
                 return None
 
-        st.download_button(
-            label="売上先別の表をダウンロード",
-            data=to_excel_filtered(filtered_data),
-            file_name='filtered_data.xlsx',
-            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
+        # 売上先別データフレームのダウンロードボタン
+        if to_excel_customer_summary(filtered_data) is not None:
+            st.download_button(
+                label="売上先別の表をダウンロード",
+                data=to_excel_customer_summary(filtered_data),
+                file_name='customer_summary_data.xlsx',
+                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 
 
