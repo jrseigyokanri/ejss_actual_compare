@@ -604,19 +604,9 @@ def main_page():
                 data=to_excel_customer_summary(filtered_data),
                 file_name='customer_summary_data.xlsx',
                 mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            )
+            
                 
-
-
-
-
-
-
-   
-
-
-
-
-
 
         with st.expander("売上先別比較グラフ"):
 
