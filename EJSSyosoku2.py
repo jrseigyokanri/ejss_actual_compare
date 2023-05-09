@@ -54,7 +54,7 @@ def main_page():
         return df
 
     def get_max_date(df):
-        max_date = df['伝票日付'].max()
+        max_date = df['登録日付'].max()
         if pd.isna(max_date):
             return None
         return pd.to_datetime(str(max_date), format='%Y%m%d')
