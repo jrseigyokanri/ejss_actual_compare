@@ -92,7 +92,7 @@ def main_page():
 
         print(forecast_data)
         # 月の選択
-        selected_month = 4
+        selected_month = 5
         
         #st.selectbox("実績月を選択してください。", options=list(range(1, 13)))
 
