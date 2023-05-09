@@ -77,6 +77,7 @@ def main_page():
     # Get the maximum date from the actual data
     max_date = get_max_date(actual_data) if actual_data is not None else None
     formatted_date = max_date.strftime("%Y年%m月%d日") if max_date is not None else ""
+    formatted2_date = max_date.strftime("%m月%d日") if max_date is not None else ""
 
     st.write('<a name="title"></a>', unsafe_allow_html=True)
     st.title(f'{formatted_date}')
@@ -192,7 +193,7 @@ def main_page():
 
         # 選択された月の売上実績
         actual_sales = filtered_actual['売上本体金額'].sum()
-        col2.metric(f"💰現時点の売上実績", f"{actual_sales:,.0f}円")
+        col2.metric(f"💰{formatted2_date}の売上実績", f"{actual_sales:,.0f}円")
 
         # 選択された月の売上予測
         sales_forecast = filtered_forecast[f'EJSS売上{zenkaku_num(selected_month)}'].sum()
@@ -200,7 +201,7 @@ def main_page():
 
         # 選択された月の粗利実績
         actual_gross_profit = filtered_actual['粗利'].sum()
-        col4.metric(f"💰現時点の粗利実績", f"{actual_gross_profit:,.0f}円")
+        col4.metric(f"💰{formatted2_date}の粗利実績", f"{actual_gross_profit:,.0f}円")
 
         # 選択された月の粗利予測
         gross_profit_forecast = filtered_forecast[f'EJSS粗利{zenkaku_num(selected_month)}'].sum()
