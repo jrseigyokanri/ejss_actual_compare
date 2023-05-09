@@ -192,7 +192,7 @@ def main_page():
 
         # 選択された月の売上実績
         actual_sales = filtered_actual['売上本体金額'].sum()
-        col2.metric(f"💰{selected_month}月の売上実績", f"{actual_sales:,.0f}円")
+        col2.metric(f"💰現時点の売上実績", f"{actual_sales:,.0f}円")
 
         # 選択された月の売上予測
         sales_forecast = filtered_forecast[f'EJSS売上{zenkaku_num(selected_month)}'].sum()
@@ -200,7 +200,7 @@ def main_page():
 
         # 選択された月の粗利実績
         actual_gross_profit = filtered_actual['粗利'].sum()
-        col4.metric(f"💰{selected_month}月の粗利実績", f"{actual_gross_profit:,.0f}円")
+        col4.metric(f"💰現時点の粗利実績", f"{actual_gross_profit:,.0f}円")
 
         # 選択された月の粗利予測
         gross_profit_forecast = filtered_forecast[f'EJSS粗利{zenkaku_num(selected_month)}'].sum()
