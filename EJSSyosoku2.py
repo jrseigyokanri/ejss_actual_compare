@@ -493,8 +493,11 @@ def main_page():
         EJSS_gross_profit_column = f'EJSS粗利{str(current_month).translate(str.maketrans("0123456789", "０１２３４５６７８９"))}'
 
         # 売上差額と粗利差額の計算をフィルタリング後に移動
-        filtered_data['売上差額'] = filtered_data['売上実績'] - filtered_data[EJSS_sales_column]
-        filtered_data['粗利差額'] = filtered_data['粗利実績'] - filtered_data[EJSS_gross_profit_column]
+        #filtered_data['売上差額'] = filtered_data['売上実績'] - filtered_data[EJSS_sales_column]
+        #filtered_data['粗利差額'] = filtered_data['粗利実績'] - filtered_data[EJSS_gross_profit_column]
+        # 売上差額と粗利差額の計算
+        filtered_data['売上差額'] = filtered_data[f'EJSS売上{zenkaku_num(selected_month)}'] - filtered_data['売上本体金額']
+        filtered_data['粗利差額'] = filtered_data[f'EJSS粗利{zenkaku_num(selected_month)}'] - filtered_data['粗利']
 
         filtered_data = filtered_data[['売上先', '売上先名', '営業担当コード', '営業担当名', EJSS_sales_column, '売上実績', '売上差額', '売上達成度', EJSS_gross_profit_column, '粗利実績', '粗利差額','粗利達成度', 'EJSS粗利率', '実績粗利率']]
 
