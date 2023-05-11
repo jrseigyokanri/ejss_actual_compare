@@ -565,7 +565,9 @@ def main_page():
 
 
         # インデックスを1から始めるように変更
+        summary_data.index = summary_data.index + 1
         filtered_data.index = filtered_data.index + 1
+        
         
         # スタイリングを適用して営業担当別データフレームを表示
         st.header("営業担当別売上状況")
