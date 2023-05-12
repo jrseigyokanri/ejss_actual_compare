@@ -474,22 +474,23 @@ def main_page():
 
         
         
-        # 達成度を計算
+       # 達成度を計算
         merged_data['売上達成度'] = np.where(
             merged_data[f'EJSS売上{str(current_month).translate(str.maketrans("0123456789", "０１２３４５６７８９"))}'] == 0, 
-            100, 
+            0, 
             (merged_data['売上実績'] / merged_data[f'EJSS売上{str(current_month).translate(str.maketrans("0123456789", "０１２３４５６７８９"))}']) * 100
         )
 
         merged_data['粗利達成度'] = np.where(
             merged_data[f'EJSS粗利{str(current_month).translate(str.maketrans("0123456789", "０１２３４５６７８９"))}'] == 0, 
-            100, 
+            0, 
             (merged_data['粗利実績'] / merged_data[f'EJSS粗利{str(current_month).translate(str.maketrans("0123456789", "０１２３４５６７８９"))}']) * 100
         )
 
         # NaNを0に置換
         merged_data['売上達成度'] = merged_data['売上達成度'].fillna(0)
         merged_data['粗利達成度'] = merged_data['粗利達成度'].fillna(0)
+
 
 
         # 列の順序を変更
