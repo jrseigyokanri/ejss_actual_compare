@@ -487,6 +487,11 @@ def main_page():
             (merged_data['粗利実績'] / merged_data[f'EJSS粗利{str(current_month).translate(str.maketrans("0123456789", "０１２３４５６７８９"))}']) * 100
         )
 
+        # NaNを0に置換
+        merged_data['売上達成度'] = merged_data['売上達成度'].fillna(0)
+        merged_data['粗利達成度'] = merged_data['粗利達成度'].fillna(0)
+
+
         # 列の順序を変更
         merged_data = merged_data[['売上先', '売上先名', '営業担当コード', '営業担当名', f'EJSS売上{str(current_month).translate(str.maketrans("0123456789", "０１２３４５６７８９"))}', '売上実績', f'EJSS粗利{str(current_month).translate(str.maketrans("0123456789", "０１２３４５６７８９"))}', '粗利実績', 'EJSS粗利率', '実績粗利率', '売上達成度', '粗利達成度']]
 
