@@ -564,8 +564,21 @@ def main_page():
         
 
         # 達成度を計算
-        summary_data['売上達成度'] = (summary_data['売上実績'] / summary_data[EJSS_sales_column]) * 100
-        summary_data['粗利達成度'] = (summary_data['粗利実績'] / summary_data[EJSS_gross_profit_column]) * 100
+        summary_data['売上達成度'] = np.where(
+            summary_data[EJSS_sales_column] == 0, 
+            0, 
+            (summary_data['売上実績'] / summary_data[EJSS_sales_column]) * 100
+        )
+
+        summary_data['粗利達成度'] = np.where(
+            summary_data[EJSS_gross_profit_column] == 0, 
+            0, 
+            (summary_data['粗利実績'] / summary_data[EJSS_gross_profit_column]) * 100
+        )
+
+        # NaNを0に置換
+        summary_data['売上達成度'] = summary_data['売上達成度'].fillna(0)
+        summary_data['粗利達成度'] = summary_data['粗利達成度'].fillna(0)
 
         # 売上差額と粗利差額を追加
         summary_data['売上差額'] = summary_data['売上実績'] - summary_data[EJSS_sales_column]
