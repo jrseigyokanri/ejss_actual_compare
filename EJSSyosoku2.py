@@ -1,3 +1,4 @@
 import streamlit as st
 
-st.title(Close)
+def main():
+    st.title("title")
